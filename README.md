@@ -130,14 +130,19 @@ function <ControllerName>() {};
 
 ### SYSTEM AND USER SPACE MODULES (optional)
 
-SYSDB: ukrnl
-STATUS: Pre-Alpha
-COLLECTION: controller
+**SYSDB:** ukrnl
+
+**STATUS:** Pre-Alpha
+
+**COLLECTION:** controller
+
+```
 module		host		id	version			status	path
 					major	minor	patch
 Processes	localhost	36000	0	0	0	A	/slib/
 Init		localhost	36001	0	0	0	A	/slib/
 Monitor		localhost	40000	0	0	0	A	/lib/
+```
 
 ### UKRNL MODULES / CONTROLLERS JSON DEFS (controllers.json)
 
