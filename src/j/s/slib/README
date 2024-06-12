@@ -1,0 +1,11 @@
+***************************************************************************
+* All modules under slib context are system space and can have their ******
+* initial values in ukrnl.json file, final users just have to used to use *
+* lib context, don't use slib context for your own modules. ***************
+***************************************************************************
+
+NOTE FOR DEVELOPERS:
+
+Processes and Init folders have C examples of how to use low-level coding
+for ukrnl.js. This coding space _slib_ has to be optional, and each module
+would activate via the ukrnl.json configuration file.

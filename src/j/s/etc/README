@@ -1,0 +1,7 @@
+***************************************************************************
+* If your controller has initial values, make its structure public as *****
+* <filename>.json.in and save same structure with privates like passwords *
+* as <filename>.json, you can upload your free software controller ********
+* sources just with <filename>.json.in file and keep safe your private ****
+* data. It is just an idea. ***********************************************
+***************************************************************************

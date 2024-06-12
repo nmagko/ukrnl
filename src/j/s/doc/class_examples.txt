@@ -1,0 +1,36 @@
+/* ExecvMessages Class: Callbacks Handler */
+/* extend  = require ('extend');
+ *
+ * function ExecvMessages() {
+ *    this.ems = {};
+ * };
+ *
+ * ExecvMessages.prototype = {
+ *    constructor: ExecvMessages,
+ *    cllbck: function (error, stdout, stderr) {
+ *	this.ems = extend(true, this.ems, {e: error, o: stdout, r: stderr});
+ *	if ( this.ems.e != null ) {
+ *	    console.log(JSON.stringify(this.ems.e));
+ *	    console.log(this.ems.r);
+ *	} else {
+ *	    console.log(this.ems.o);
+ *	}
+ *    }
+ * };
+ */
+/* ExecvMessages End */
+
+/* ExecvMessages Class: Callbacks Handler */
+/*
+ * ExecvMessages.prototype = {
+ *    constructor: ExecvMessages,
+ *    res: {},
+ *    cllset: function ( response ) {
+ *	this.res = response;
+ *    },
+ *    cllbck: function ( line ) {
+ *	stdout.write( line );
+ *    }
+ * };
+ */
+/* ExecvMessages End */

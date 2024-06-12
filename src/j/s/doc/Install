@@ -1,0 +1,92 @@
+ PREPARING UKRNL.JS PACKAGES AND SPACES
+===============================================================================
+
+Install the latest version of NodeJS. There is not mongo dependency
+anymore.
+
+ INSTALLING SCREEN AS ROOT
+===============================================================================
+
+~# apt-get install screen
+
+ CONFIGURATION FILES
+===============================================================================
+
+The main configuration of the system is in the files listed below. You
+do not need to change the kernel configuration, but the controller
+configuration has all the entries you need to run your controllers. The
+controller configuration file includes some examples. You can see the
+Technical Reference for further details.
+
+ ukrnl.json
+
+ controller.json
+
+ IMPORTANT NOTES
+===============================================================================
+
+You can find the contoller.json file with examples of how to define your
+controllers. System controllers have ports defined between
+36000-39999. User controllers have ports defined between 40000-60000.
+
+If you wanna test the environment (optional), you can compile Init a
+Processes modules by linking Makefile.example as Makefile, you need to
+install build-essentials as root.
+
+~# apt-get install gcc make build-essential
+
+~# ln -s Makefile.example Makefile
+
+~# make
+
+Then start the screen and create two windows, in the first window start
+the kernel and the second window is for the Processes controller.
+
+~$ screen
+
+The screen will automatically create the first window. You have to
+create the second one.
+
+Ctrl+a c
+
+Then, list all windows to move between them.
+
+Ctrl+a "
+
+>>> Screen 1: Start the kernel <<<
+
+~$ ./ukrnl.js
+
+>>> Screen 2: Start the controller <<<
+
+~$ ./ukrnl.js Processes
+
+Then create another window, go to the test folder, and start executing
+the test commands as:
+
+>>> Screen 3: Testing space <<<
+
+~$ cd test
+
+~$ ./uktestMOD.0.js
+
+~$ ./uktestMOD.1.js
+
+~$ ./uktestMOD.2.js
+
+~$ ./uktestMOD.3.js
+
+Test 0 is gonna give you an error on purpose, 1 and 2 return a fast
+result and 3 wait for 60 seconds before returning a result.
+
+ FREE DOCUMENTATION LICENSE
+===============================================================================
+
+Copyright (C)  2015,2016  Victor Clodoaldo Salas Pumacayo.
+
+  Permission is granted to copy, distribute and/or modify this document
+  under the terms of the GNU Free Documentation License, Version 1.3
+  or any later version published by the Free Software Foundation;
+  with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+  A copy of the license is included in the section entitled "GNU
+  Free Documentation License".

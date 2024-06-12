@@ -1,0 +1,13 @@
+{
+    "module": {
+	"Processes": {
+	    "host": "localhost", "id": "36000", "status": "A", "path": "/slib/"
+	},
+	"Init": {
+	    "host": "localhost", "id": "36001", "status": "A", "path": "/slib/"
+	},
+	"Monitor": {
+	    "host": "localhost", "id": "40000", "status": "A", "path": "/lib/"
+	}
+    }
+}

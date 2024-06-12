@@ -1,0 +1,63 @@
+#
+# ukrnl.js Makefile
+# Copyright (C) 2005-2016  Victor C. Salas P. (aka nmag) <nmagko@gmail.com>
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+##########################################################################
+# THIS IS A MAKEFILE EXAMPLE YOU CAN USE IF YOU HAVE BINARY SLIB MODULES #
+##########################################################################
+
+# # PREREQS
+# LIBUREGEX_SOURCES_PATH	= ../../c/liburegex
+
+# # MODULES NEED TO BE MADE
+PROCESSES_SOURCES_PATH	= slib/Processes
+INIT_SOURCES_PATH	= slib/Init
+
+# VARS
+UKRNL_MAKE		= make
+UKRNL_RM		= rm
+UKRNL_USER		= $(shell whoami)
+UKRNL_BASEPATH		= $(shell pwd)
+
+ifeq ($(UKRNL_USER), root)
+ $(error You cannot be root)
+endif
+
+# ifndef LIBUREGEX_SOURCES_PATH
+#  $(error You have to set liburegex sources path environment)
+# endif
+
+all: clean justsources binaries
+
+justsources:
+	# cd $(LIBUREGEX_SOURCES_PATH) && LD_INCLUDE_PATH=$(UKRNL_BASEPATH)/include LD_LIBRARY_PATH=$(UKRNL_BASEPATH)/sbin $(UKRNL_MAKE) uninstall
+	# cd $(LIBUREGEX_SOURCES_PATH) && LD_INCLUDE_PATH=$(UKRNL_BASEPATH)/include LD_LIBRARY_PATH=$(UKRNL_BASEPATH)/sbin $(UKRNL_MAKE) clean
+	cd $(PROCESSES_SOURCES_PATH) && $(UKRNL_MAKE) uninstall
+	cd $(PROCESSES_SOURCES_PATH) && $(UKRNL_MAKE) clean
+	cd $(INIT_SOURCES_PATH) && $(UKRNL_MAKE) uninstall
+	cd $(INIT_SOURCES_PATH) && $(UKRNL_MAKE) clean
+
+binaries:
+	# cd $(LIBUREGEX_SOURCES_PATH) && LD_INCLUDE_PATH=$(UKRNL_BASEPATH)/include LD_LIBRARY_PATH=$(UKRNL_BASEPATH)/sbin $(UKRNL_MAKE)
+	# cd $(LIBUREGEX_SOURCES_PATH) && LD_INCLUDE_PATH=$(UKRNL_BASEPATH)/include LD_LIBRARY_PATH=$(UKRNL_BASEPATH)/sbin $(UKRNL_MAKE) install
+	cd $(PROCESSES_SOURCES_PATH) && $(UKRNL_MAKE)
+	cd $(PROCESSES_SOURCES_PATH) && $(UKRNL_MAKE) install
+	cd $(INIT_SOURCES_PATH) && $(UKRNL_MAKE)
+	cd $(INIT_SOURCES_PATH) && $(UKRNL_MAKE) install
+
+clean:
+	$(UKRNL_RM) -f *~

@@ -1,0 +1,97 @@
+#!/bin/bash
+#
+#  NodeJS easy install
+#  Copyright (C) 2017  Victor C. Salas P. (aka nmag) <nmagko@gmail.com>
+#
+#  This program is free software: you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation, either version 3 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+#
+
+echo "Checking if `whoami` is sudo capable..."
+sudo -v
+if [ "$?" != "0" ]; then
+    echo "Cannot get root access, sorry."
+    exit 1
+fi
+echo -n "Do you wanna use proxy server (y/N)? [default=N] "
+read choice
+choice=`echo $choice | tr [:upper:] [:lower:]`
+if [ "$choice" == "y" ] || [ "$choice" == "yes" ]; then
+    echo -n "Proxy IP   : "
+    read ProxyIP
+    echo -n "Proxy PORT : "
+    read ProxyPORT
+    export http_proxy=http://$ProxyIP:$ProxyPORT/
+    export https_proxy=http://$ProxyIP:$ProxyPORT/
+fi
+echo "Starting... "
+sudo rm -Rf /tmp/nodejs-easy-install
+mkdir -p /tmp/nodejs-easy-install
+cd /tmp/nodejs-easy-install
+echo "Updating list of packages..."
+wget -c https://nodejs.org/download/release/latest/
+if [ "$?" != "0" ]; then
+    echo "Cannot download list of packages, sorry."
+    exit 1
+fi
+cat index.html | \
+    sed -ne '/href.*node/p' | \
+    sed -e 's/^.*href=\"//;s/\">.*$//' | \
+    sed -ne '/\.gz$/p' | \
+    sed -ne '/-.*-.*-/p' | \
+    cat -n > index.txt
+echo " ====================================================="
+echo " List of packages: Choose your architecture..."
+echo " ====================================================="
+cat index.txt
+echo " ====================================================="
+echo -n " Choose one: "
+read choice
+if [ "vacuum$choice" == "vacuum" ]; then
+    echo "no choice."
+    exit 1
+fi
+node_chosen=`cat index.txt | \
+		 sed -ne "/^\s\+$choice\s\+/p" | \
+		 sed -e "s/^\s\+$choice\s\+//;s/\s\+$//"`
+if [ "vacuum$node_chosen" == "vacuum" ]; then
+    echo "no choice."
+    exit 1
+fi
+wget -c https://nodejs.org/download/release/latest/$node_chosen
+if [ "$?" != "0" ]; then
+    echo "Cannot download selected package, sorry."
+    exit 1
+fi
+echo "Unpacking $node_chosen..."
+tar -xzf $node_chosen 
+sudo rm $node_chosen
+sudo chown -R root:root node-*
+sudo rm -Rf /usr/local/node
+sudo mv node-* /usr/local/node
+cd /usr/local/node/bin
+sudo ln -s node nodejs
+cd ~
+node_env_exists=`cat .bashrc | grep "/usr/local/node/bin"`
+if [ "vacuum$node_env_exists" == "vacuum" ]; then
+    echo "# nodejs-easy-install" >> .bashrc
+    echo "export PATH=\$PATH:/usr/local/node/bin" >> .bashrc
+    echo " ====================================================="
+    echo " Done: Logoff to get environment ready."
+    echo " ====================================================="
+else
+    echo " ====================================================="
+    echo " Done."
+    echo " ====================================================="
+fi
+exit 0
